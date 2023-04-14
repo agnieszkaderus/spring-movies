@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>it movies</title>
+<head>
+	<meta charset="UTF-8">
+	<title>it movies</title>
 
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/header.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/header.css">
 
-		<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
-		<script type="text/javascript">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script type="text/javascript">
 		$.get('http://127.0.0.1:8080/api/movies', {}, function (data, textStatus, jqXHR) {
 
-		    console.log('data: ', data);
-    		var html = '';
-        	$.each(data, function(key, value) {
+			console.log('data: ', data);
+			var html = '';
+			$.each(data, function(key, value) {
 
-        	    html += '<div class="card">';
-  				html += '<img onclick="goToDetails('+value.movieId+')" src="' + (isImage(value.image) ? value.image : getPlaceholder()) + '" alt="movie" style="width:100%">';
-  				html += '<h3>' + value.title + '</h3>';
-  				html += '<p class="title">Rok produkcji</p>';
-  				html += '<p>' + (value.year === undefined ? "????" : value.year) + '</p>';
+				html += '<div class="card">';
+				html += '<img onclick="goToDetails('+value.movieId+')" src="' + (isImage(value.image) ? value.image : getPlaceholder()) + '" alt="movie" style="width:100%">';
+				html += '<h3>' + value.title + '</h3>';
+				html += '<p class="title">Rok produkcji</p>';
+				html += '<p>' + (value.year === undefined ? "????" : value.year) + '</p>';
 				html += '<p><button onclick="deleteMovie('+value.movieId+')">ID: ' + value.movieId + '</button></p>';
 				html += '</div>';
-        	});
+			});
 
-        	$('#movies').html(html);
+			$('#movies').html(html);
 		}).fail(function() {
-		    $('#movies').html("<div style='text-align: center; color: red;'>Mam problem z wyświetleniem danych... :/ (musisz uruchomić aplikacje za pomocą MAVEN)</div>");
+			$('#movies').html("<div style='text-align: center; color: red;'>Mam problem z wyświetleniem danych... :/ (musisz uruchomić aplikacje za pomocą MAVEN)</div>");
 		});
 
 		// count movies
@@ -60,27 +60,27 @@
 		}
 
 		function isImage(url) {
-            return url.indexOf(".jpg") !== -1 || url.indexOf(".png") !== -1;
+			return url.indexOf(".jpg") !== -1 || url.indexOf(".png") !== -1;
 		}
 
 		function getPlaceholder() {
-		    return './img/placeholder.png';
+			return './img/placeholder.png';
 		}
 
-        $(document).ready(function() {
-            $('#add-movie').click(function() {
-                window.location.href='add-movie.html';
-            })
-        });
+		$(document).ready(function() {
+			$('#add-movie').click(function() {
+				window.location.href='add-movie.html';
+			})
+		});
 
-		</script>
-	</head>
+	</script>
+</head>
 
-	<body>
-		<header>
-			<div class="header-title"><h1>Biblioteka filmów</h1></div><div class="header-counter-button">LICZNIK: <span id="movies-counter"></span></div><div class="header-button" id="add-movie">DODAJ FILM</div>
-		</header>
+<body>
+<header>
+	<div class="header-title"><h1>Biblioteka filmów</h1></div><div class="header-counter-button">LICZNIK: <span id="movies-counter"></span></div><div class="header-button" id="add-movie">DODAJ FILM</div>
+</header>
 
-    	<div class="movies" id="movies"></div>
-	</body>
+<div class="movies" id="movies"></div>
+</body>
 </html>

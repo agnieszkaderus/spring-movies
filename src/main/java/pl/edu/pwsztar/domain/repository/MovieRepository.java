@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import pl.edu.pwsztar.domain.entity.Movie;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long>, CrudRepository<Movie, Long> {
@@ -20,4 +21,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long>, CrudReposit
     void deleteById(@Param("movieId") Long movieId);
 
     Movie findOneByMovieId(Long movieId);
+
+    @Override
+    Optional<Movie> findById(Long aLong);
 }

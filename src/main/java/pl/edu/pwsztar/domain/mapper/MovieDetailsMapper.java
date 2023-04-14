@@ -12,6 +12,8 @@ public class MovieDetailsMapper {
 
         detailsMovieDto.setTitle(movie.getTitle());
         detailsMovieDto.setVideoId(movie.getVideoId());
+        detailsMovieDto.setImage(movie.getImage());
+        detailsMovieDto.setYear(movie.getYear().toString());
 
         return detailsMovieDto;
     }

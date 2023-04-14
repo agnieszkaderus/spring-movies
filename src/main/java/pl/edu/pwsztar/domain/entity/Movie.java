@@ -1,8 +1,11 @@
 package pl.edu.pwsztar.domain.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Data
 @Entity
 @Table(name = "movies")
 public class Movie implements Serializable {

@@ -11,10 +11,12 @@ import pl.edu.pwsztar.domain.entity.Movie;
 import pl.edu.pwsztar.domain.mapper.MovieDetailsMapper;
 import pl.edu.pwsztar.domain.mapper.MovieListMapper;
 import pl.edu.pwsztar.domain.mapper.MovieMapper;
+import pl.edu.pwsztar.domain.mapper.MovieUpdateMapper;
 import pl.edu.pwsztar.domain.repository.MovieRepository;
 import pl.edu.pwsztar.service.MovieService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -25,17 +27,19 @@ public class MovieServiceImpl implements MovieService {
     private final MovieListMapper movieListMapper;
     private final MovieMapper movieMapper;
     private final MovieDetailsMapper movieDetailsMapper;
+    private final MovieUpdateMapper movieUpdateMapper;
 
     @Autowired
     public MovieServiceImpl(MovieRepository movieRepository,
                             MovieListMapper movieListMapper,
                             MovieMapper movieMapper,
-                            MovieDetailsMapper movieDetailsMapper) {
+                            MovieDetailsMapper movieDetailsMapper, MovieUpdateMapper movieUpdateMapper) {
 
         this.movieRepository = movieRepository;
         this.movieListMapper = movieListMapper;
         this.movieMapper = movieMapper;
         this.movieDetailsMapper = movieDetailsMapper;
+        this.movieUpdateMapper = movieUpdateMapper;
     }
 
     @Override
@@ -62,8 +66,25 @@ public class MovieServiceImpl implements MovieService {
         if(movie == null) {
             return new DetailsMovieDto();
         }
-
         return movieDetailsMapper.mapToDto(movie);
     }
+
+    @Override
+    public void updateMovie(Long movieId, CreateMovieDto createMovieDto) {
+        Optional<Movie> movieOptional = movieRepository.findById(movieId);
+        if(movieOptional.isPresent()){
+            movieRepository.save(movieUpdateMapper.mapToMovie(createMovieDto, movieOptional));
+        }
+    }
+// wersja bez Optionala i Mappera
+//    @Override
+//    public void updateMovie(Long movieId, CreateMovieDto createMovieDto) {
+//        Movie movie = movieRepository.findOneByMovieId(movieId);
+//        movie.setTitle(createMovieDto.getTitle());
+//        movie.setImage(createMovieDto.getImage());
+//        movie.setYear(createMovieDto.getYear());
+//        movie.setVideoId(createMovieDto.getVideoId());
+//        movieRepository.save(movie);
+//    }
 
 }

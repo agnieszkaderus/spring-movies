@@ -1,8 +1,15 @@
 package pl.edu.pwsztar.domain.dto;
 
+import lombok.Data;
+
+@Data
 public class DetailsMovieDto {
     private String title;
     private String videoId;
+
+    private String image;
+
+    private String year;
 
     public DetailsMovieDto() {
     }
